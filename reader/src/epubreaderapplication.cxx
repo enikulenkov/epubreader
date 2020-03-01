@@ -19,7 +19,7 @@
 #include "mainwindow.h"
 #include "dbusdefs.h"
 #include <QDBusConnection>
-#include <QtDeclarative>
+#include <QtQuick>
 #include <QDBusError>
 #include "thumbnailitem.h"
 #include "epubreadersettings.h"

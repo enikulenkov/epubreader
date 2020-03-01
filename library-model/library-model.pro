@@ -5,7 +5,7 @@ include(../common.pri)
 
 CONFIG += qt warn_on staticlib dbusinterfaces
 
-QT += dbus declarative
+QT += dbus quick widgets
 
 INCLUDEPATH += ./src .
 

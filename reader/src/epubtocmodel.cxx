@@ -26,10 +26,6 @@
 EPUBTocModel::EPUBTocModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    QHash<int, QByteArray> roles;
-    roles[Qt::DisplayRole] = "display";
-    roles[UrlRole] = "contentUrl";
-    setRoleNames(roles);
 }
 
 void EPUBTocModel::setDocument(const QByteArray &doc)
@@ -103,3 +99,13 @@ QVariant EPUBTocModel::data(const QModelIndex &index, int role) const
     }
     return QVariant();
 }
+
+QHash<int, QByteArray> EPUBTocModel::roleNames()
+{
+    QHash<int, QByteArray> roles;
+
+    roles[Qt::DisplayRole] = "display";
+    roles[EPUBTocModel::UrlRole] = "contentUrl";
+    return roles;
+}
+

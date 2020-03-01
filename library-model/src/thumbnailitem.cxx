@@ -22,10 +22,10 @@
 
 ThumbnailerService *ThumbnailItem::m_thumbnailer;
 
-ThumbnailItem::ThumbnailItem(QDeclarativeItem *parent) :
-    QDeclarativeItem(parent), m_loaded(false)
+ThumbnailItem::ThumbnailItem(QQuickItem *parent) :
+    QQuickItem(parent), m_loaded(false)
 {
-    setFlag(QGraphicsItem::ItemHasNoContents, false);
+    setFlag(QQuickItem::ItemHasContents, true);
 
     if (!m_thumbnailer)
         m_thumbnailer = new ThumbnailerService(QCoreApplication::instance());

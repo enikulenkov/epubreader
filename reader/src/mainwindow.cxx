@@ -15,9 +15,10 @@
  */
 
 #include "mainwindow.h"
-#include <QDeclarativeView>
-#include <QDeclarativeContext>
-#include <QDeclarativeEngine>
+#include <QQuickView>
+#include <QQuickWidget>
+#include <QQmlContext>
+#include <QQmlEngine>
 #include <QAction>
 #include <QMenuBar>
 #include <QFileDialog>
@@ -34,8 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setWindowTitle(tr("E-Book Reader"));
 
-    QDeclarativeView *view = new QDeclarativeView;
-    view->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    QQuickView *view = new QQuickView;
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->rootContext()->setContextProperty(QLatin1String("mainWindow"), this);
     EPUBReaderSettings *settings = EPUBReaderApplication::settings();
     view->rootContext()->setContextProperty(QLatin1String("settings"), settings);
@@ -47,7 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
     view->engine()->addImageProvider(QLatin1String("hildon-icon"), new HildonImageProvider);
     view->setSource(QUrl(QLatin1String("qrc:/qml/epubreader.qml")));
 
-    setCentralWidget(view);
+    QWidget *container = QWidget::createWindowContainer(view);
+    setCentralWidget(container);
 
     QAction *openAction = new QAction(tr("Open"), this);
     connect(openAction, SIGNAL(triggered()), SLOT(chooseFile()));

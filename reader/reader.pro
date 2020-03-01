@@ -48,7 +48,7 @@ HEADERS = \
 
 CONFIG += qt warn_on link_pkgconfig
 
-QT += xmlpatterns gui declarative network webkit dbus
+QT += xmlpatterns gui network webenginewidgets dbus quickwidgets
 
 PKGCONFIG += libnotify
 

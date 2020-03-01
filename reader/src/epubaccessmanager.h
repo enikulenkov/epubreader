@@ -21,13 +21,13 @@
 #include <QPointer>
 #include "epubfile.h"
 
-class EPUBAccessManager : public QNetworkAccessManager {
+class EPUBAccessManager : public QObject {
     Q_OBJECT
 public:
     explicit EPUBAccessManager(QObject *parent = 0);
     void setDocument(EPUBFile *epub);
 protected:
-    virtual QNetworkReply *createRequest(Operation op, const QNetworkRequest &request, QIODevice *outgoingData);
+    //virtual QNetworkReply *createRequest(Operation op, const QNetworkRequest &request, QIODevice *outgoingData);
 private:
     QPointer<EPUBFile> m_epub;
 };

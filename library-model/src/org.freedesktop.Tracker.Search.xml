@@ -42,7 +42,7 @@
       <arg type="b" name="sort_descending" direction="in" />
       <arg type="i" name="offset" direction="in" />
       <arg type="i" name="max_hits" direction="in" />
-      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="StringListList"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QList<QStringList>"/>
       <arg type="aas" name="result" direction="out" />
     </method>
 

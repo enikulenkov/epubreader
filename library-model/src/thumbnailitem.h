@@ -17,16 +17,17 @@
 #ifndef THUMBNAILITEM_H
 #define THUMBNAILITEM_H
 
-#include <QDeclarativeItem>
+#include <QQuickItem>
+#include <QStyleOptionGraphicsItem>
 
 class ThumbnailerService;
 
-class ThumbnailItem : public QDeclarativeItem {
+class ThumbnailItem : public QQuickItem {
     Q_OBJECT
     Q_PROPERTY(bool loaded READ loaded NOTIFY loadStatusChanged)
     Q_PROPERTY(QString file READ file WRITE setFile NOTIFY fileChanged)
 public:
-    explicit ThumbnailItem(QDeclarativeItem *parent = 0);
+    explicit ThumbnailItem(QQuickItem *parent = 0);
 
     bool loaded() const;
 

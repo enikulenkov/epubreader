@@ -19,7 +19,7 @@
 #include <QDebug>
 
 HildonImageProvider::HildonImageProvider():
-    QDeclarativeImageProvider(QDeclarativeImageProvider::Pixmap)
+    QQuickImageProvider(QQuickImageProvider::Pixmap)
 {
 }
 

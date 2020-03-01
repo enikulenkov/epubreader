@@ -15,11 +15,11 @@
  */
 
 #include "epublibrarybrowser.h"
-#include <QDeclarativeView>
-#include <QDeclarativeContext>
+#include <QQuickView>
+#include <QQmlContext>
 #include "epubdocumentlistmodel.h"
 #include "hildonimageprovider.h"
-#include <QDeclarativeEngine>
+#include <QQmlEngine>
 #include <QDebug>
 #include <QSortFilterProxyModel>
 
@@ -37,8 +37,8 @@ EPUBLibraryBrowser::EPUBLibraryBrowser(QWidget *parent) :
     proxyModel->setDynamicSortFilter(true);
     proxyModel->sort(0);
 
-    QDeclarativeView *view = new QDeclarativeView;
-    view->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    QQuickView *view = new QQuickView;
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->rootContext()->setContextProperty(QLatin1String("documentListModel"), proxyModel);
     view->rootContext()->setContextProperty(QLatin1String("libraryBrowser"), this);
     view->engine()->addImageProvider(QLatin1String("hildon-icon"), new HildonImageProvider);
@@ -49,7 +49,8 @@ EPUBLibraryBrowser::EPUBLibraryBrowser(QWidget *parent) :
 #endif
     view->setSource(QUrl(QLatin1String("qrc:/qml/epublibrary.qml")));
 
-    setCentralWidget(view);
+    QWidget *container = QWidget::createWindowContainer(view);
+    setCentralWidget(container);
 }
 
 void EPUBLibraryBrowser::openFile(const QString &fileName)

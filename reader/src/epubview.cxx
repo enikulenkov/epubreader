@@ -18,9 +18,9 @@
 #include "epubaccessmanager.h"
 #include "epubfile.h"
 #include <QAction>
-#include <QWebFrame>
+#include <QWebEnginePage>
 #include <QDebug>
-#include <QWebSecurityOrigin>
+//#include <QWebSecurityOrigin>
 #include <QDesktopServices>
 #include "epubreaderapplication.h"
 #include "epubreadersettings.h"
@@ -40,9 +40,11 @@
         "margin-left: 10px !important" \
     "}"
 
-EPUBView::EPUBView(QGraphicsItem *parent) :
-    QGraphicsWebView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
+//EPUBView::EPUBView(QGraphicsItem *parent) :
+    //QGraphicsWebView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
+EPUBView::EPUBView()
 {
+#if 0
     QWebSettings *s = settings();
 
     s->setAttribute(QWebSettings::JavascriptEnabled, false);
@@ -56,6 +58,7 @@ EPUBView::EPUBView(QGraphicsItem *parent) :
 
     page()->setNetworkAccessManager(new EPUBAccessManager);
     page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
+#endif
 
     m_prevPageAction = new QAction(this);
     m_nextPageAction = new QAction(this);
@@ -68,10 +71,10 @@ EPUBView::EPUBView(QGraphicsItem *parent) :
 
     connect(this, SIGNAL(urlChanged(QUrl)), SLOT(handleUrlChange(QUrl)));
 
-    QWebSecurityOrigin::addLocalScheme(QLatin1String("epub"));
+    //QWebSecurityOrigin::addLocalScheme(QLatin1String("epub"));
     connect(this, SIGNAL(linkClicked(QUrl)), SLOT(handleExternalLink(QUrl)));
 
-    setResizesToContents(true);
+    //setResizesToContents(true);
 
     setBackgroundIndex(0);
 
@@ -104,7 +107,7 @@ void EPUBView::setBackgroundIndex(int idx)
     QString style = QString::fromLatin1(STYLESHEET_TEMPLATE).arg(c.name());
     QByteArray userStyleSheet = style.toUtf8();
     QByteArray url = QByteArray("data:text/css;charset=utf-8;base64,") + userStyleSheet.toBase64();
-    settings()->setUserStyleSheetUrl(QUrl::fromEncoded(url));
+    //settings()->setUserStyleSheetUrl(QUrl::fromEncoded(url));
     resizeContent();
 }
 
@@ -116,8 +119,7 @@ bool EPUBView::openFile(const QString &fileName)
     EPUBReaderSettings *settings = EPUBReaderApplication::settings();
     settings->saveLastURL(m_fileName, url());
 
-    Q_ASSERT(qobject_cast<EPUBAccessManager *>(page()->networkAccessManager()));
-    EPUBAccessManager *manager = static_cast<EPUBAccessManager *>(page()->networkAccessManager());
+    EPUBAccessManager *manager = new EPUBAccessManager();
 
     EPUBFile *newEPUB = new EPUBFile(fileName, this);
     if (newEPUB->status() == EPUBFile::NoError) {
@@ -231,28 +233,34 @@ void EPUBView::setPreferredHeight(int height)
 
 void EPUBView::resizeContent()
 {
-    page()->setPreferredContentsSize(QSize(m_preferredWidth, m_preferredHeight));
+    //page()->setPreferredContentsSize(QSize(m_preferredWidth, m_preferredHeight));
     setTextSizeMultiplier(textSizeMultiplier()); // FIXME otherwise content may not feet view
 }
 
 qreal EPUBView::textSizeMultiplier() const
 {
-    return page()->mainFrame()->textSizeMultiplier();
+    //return page()->mainFrame()->textSizeMultiplier();
+    return 1;
 }
 
 void EPUBView::setTextSizeMultiplier(qreal factor)
 {
-    page()->mainFrame()->setTextSizeMultiplier(factor);
+    //page()->mainFrame()->setTextSizeMultiplier(factor);
+    (void)factor;
 }
 
 QString EPUBView::defaultFont() const
 {
-    return settings()->fontFamily(QWebSettings::StandardFont);
+    //return settings()->fontFamily(QWebSettings::StandardFont);
+    // FIXME
+    QString str;
+    return str;
 }
 
 void EPUBView::setDefaultFont(const QString &font)
 {
-    settings()->setFontFamily(QWebSettings::StandardFont, font);
+    //settings()->setFontFamily(QWebSettings::StandardFont, font);
+    (void)font;
     resizeContent();
 }
 
@@ -292,7 +300,8 @@ bool EPUBView::sceneEvent(QEvent *event)
         return true;
     }
 
-    return QGraphicsWebView::sceneEvent(event);
+    //return QGraphicsWebView::sceneEvent(event);
+    return false;
 }
 
 void EPUBView::handleExternalLink(const QUrl &url)

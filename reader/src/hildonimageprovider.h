@@ -17,9 +17,9 @@
 #ifndef HILDONIMAGEPROVIDER_H
 #define HILDONIMAGEPROVIDER_H
 
-#include <QDeclarativeImageProvider>
+#include <QQuickImageProvider>
 
-class HildonImageProvider : public QDeclarativeImageProvider {
+class HildonImageProvider : public QQuickImageProvider {
 public:
     HildonImageProvider();
 

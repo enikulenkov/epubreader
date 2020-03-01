@@ -17,9 +17,10 @@
 #include "epubaccessmanager.h"
 #include "epubreply.h"
 
-EPUBAccessManager::EPUBAccessManager(QObject *parent) :
-    QNetworkAccessManager(parent), m_epub(0)
+EPUBAccessManager::EPUBAccessManager(QObject *parent)
+    //QNetworkAccessManager(parent), m_epub(0)
 {
+  (void)parent;
 }
 
 void EPUBAccessManager::setDocument(EPUBFile *epub)
@@ -27,8 +28,8 @@ void EPUBAccessManager::setDocument(EPUBFile *epub)
     m_epub = epub;
 }
 
-QNetworkReply *EPUBAccessManager::createRequest(Operation op, const QNetworkRequest &request, QIODevice *outgoingData)
-{
-    Q_UNUSED(outgoingData);
-    return new EPUBReply(m_epub, op, request);
-}
+//QNetworkReply *EPUBAccessManager::createRequest(Operation op, const QNetworkRequest &request, QIODevice *outgoingData)
+//{
+    //Q_UNUSED(outgoingData);
+    //return new EPUBReply(m_epub, op, request);
+//}

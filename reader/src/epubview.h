@@ -17,11 +17,11 @@
 #ifndef EPUBVIEW_H
 #define EPUBVIEW_H
 
-#include <QGraphicsWebView>
+#include <QWebEngineView>
 
 class EPUBFile;
 
-class EPUBView : public QGraphicsWebView {
+class EPUBView : public QWebEngineView {
     Q_OBJECT
     Q_PROPERTY(QString fileName READ fileName WRITE openFile)
     Q_PROPERTY(QAction* prevPage READ prevPageAction CONSTANT)
@@ -33,7 +33,8 @@ class EPUBView : public QGraphicsWebView {
     Q_PROPERTY(int backgroundIndex READ backgroundIndex WRITE setBackgroundIndex)
     Q_PROPERTY(QByteArray tocDocument READ tocDocument)
 public:
-    explicit EPUBView(QGraphicsItem *parent = 0);
+    //explicit EPUBView(QGraphicsItem *parent = 0);
+    explicit EPUBView();
 
     QString fileName() const;
     QAction *prevPageAction() const;

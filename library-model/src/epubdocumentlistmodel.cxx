@@ -33,7 +33,7 @@ EPUBDocumentListModel::EPUBDocumentListModel(QObject *parent) :
         QLatin1String("/org/freedesktop/Tracker/Search"),
         QDBusConnection::sessionBus(), this);
 
-    QDBusPendingReply<StringListList> reply = m_search->Query(-1, QLatin1String("Files"),
+    QDBusPendingReply<QList<QStringList>> reply = m_search->Query(-1, QLatin1String("Files"),
                                    QStringList() << QLatin1String("DC:Title") << QLatin1String("DC:Creator"),
                                    QLatin1String(""),
                                    QStringList(),
@@ -44,12 +44,6 @@ EPUBDocumentListModel::EPUBDocumentListModel(QObject *parent) :
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(reply, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), SLOT(callFinished(QDBusPendingCallWatcher*)));
-
-    QHash<int, QByteArray> roleNames;
-    roleNames[Qt::DisplayRole] = "display";
-    roleNames[FileNameRole] = "fileName";
-    roleNames[AuthorRole] = "author";
-    setRoleNames(roleNames);
 
 #ifndef Q_WS_MAEMO_5
     // Add some dummy data
@@ -92,7 +86,7 @@ QVariant EPUBDocumentListModel::data(const QModelIndex &index, int role) const
 
 void EPUBDocumentListModel::callFinished(QDBusPendingCallWatcher *call)
 {
-    QDBusPendingReply<StringListList> reply = *call;
+    QDBusPendingReply<QList<QStringList>> reply = *call;
 
     if (reply.isError()) {
         qWarning() << "Query call error";
@@ -100,7 +94,7 @@ void EPUBDocumentListModel::callFinished(QDBusPendingCallWatcher *call)
         beginResetModel();
         m_data.clear();
 
-        StringListList list = reply.argumentAt<0>();
+        QList<QStringList> list = reply.argumentAt<0>();
         Q_FOREACH (const QStringList &l, list) {
             if (l.length() < 4) {
                 qWarning() << "Wrong entry length";
@@ -113,4 +107,14 @@ void EPUBDocumentListModel::callFinished(QDBusPendingCallWatcher *call)
     }
 
     call->deleteLater();
+}
+
+QHash<int, QByteArray> EPUBDocumentListModel::roleNames()
+{
+    QHash<int, QByteArray> roleNames;
+
+    roleNames[Qt::DisplayRole] = "display";
+    roleNames[EPUBDocumentListModel::FileNameRole] = "fileName";
+    roleNames[EPUBDocumentListModel::AuthorRole] = "author";
+    return roleNames;
 }
