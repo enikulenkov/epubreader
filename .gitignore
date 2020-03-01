@@ -17,6 +17,9 @@ ui_settingsdialog.h
 *_interface.h
 reader/qrc_epubreader.cpp
 
+# Auto-generated files by QT creator
+*.pro.user
+
 # Binaries
 reader/epubreader
 thumbnailer/thumbnailer
