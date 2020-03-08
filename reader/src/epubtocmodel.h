@@ -29,9 +29,9 @@ public:
 
     void setDocument(const QByteArray &doc);
 
-    virtual int rowCount(const QModelIndex &parent) const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames();
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
     enum Roles {
         UrlRole = Qt::UserRole + 1

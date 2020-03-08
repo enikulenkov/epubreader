@@ -109,7 +109,7 @@ void EPUBDocumentListModel::callFinished(QDBusPendingCallWatcher *call)
     call->deleteLater();
 }
 
-QHash<int, QByteArray> EPUBDocumentListModel::roleNames()
+QHash<int, QByteArray> EPUBDocumentListModel::roleNames() const
 {
     QHash<int, QByteArray> roleNames;
 

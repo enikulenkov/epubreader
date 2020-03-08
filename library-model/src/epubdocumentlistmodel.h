@@ -28,9 +28,9 @@ class EPUBDocumentListModel : public QAbstractListModel {
 public:
     explicit EPUBDocumentListModel(QObject *parent = 0);
 
-    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    QHash<int, QByteArray> roleNames();
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
     enum Roles {
         FileNameRole = Qt::UserRole + 1,

@@ -100,7 +100,7 @@ QVariant EPUBTocModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QHash<int, QByteArray> EPUBTocModel::roleNames()
+QHash<int, QByteArray> EPUBTocModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
