@@ -19,6 +19,7 @@
 #include "epubfile.h"
 #include <QAction>
 #include <QWebEnginePage>
+#include <QWebEngineSettings>
 #include <QDebug>
 //#include <QWebSecurityOrigin>
 #include <QDesktopServices>
@@ -42,23 +43,24 @@
 
 //EPUBView::EPUBView(QGraphicsItem *parent) :
     //QGraphicsWebView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
-EPUBView::EPUBView()
+EPUBView::EPUBView(QWidget *parent) :
+    QWebEngineView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
 {
+
+    QWebEngineSettings *s = settings();
+
+    s->setAttribute(QWebEngineSettings::JavascriptEnabled, false);
+    //s->setAttribute(QWebEngineSettings::JavaEnabled, false);
+    //s->setAttribute(QWebEngineSettings::FrameFlatteningEnabled, true);
+    s->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, false);
 #if 0
-    QWebSettings *s = settings();
-
-    s->setAttribute(QWebSettings::JavascriptEnabled, false);
-    s->setAttribute(QWebSettings::JavaEnabled, false);
-    s->setAttribute(QWebSettings::FrameFlatteningEnabled, true);
-    s->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, false);
-
     QWebFrame *frame = page()->mainFrame();
     frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     frame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
 
     page()->setNetworkAccessManager(new EPUBAccessManager);
     page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
-#endif
+
 
     m_prevPageAction = new QAction(this);
     m_nextPageAction = new QAction(this);
@@ -76,10 +78,11 @@ EPUBView::EPUBView()
 
     //setResizesToContents(true);
 
-    setBackgroundIndex(0);
+    //setBackgroundIndex(0);
 
     m_swipeGestureType = EPUBReaderApplication::swipeGestureType();
     grabGesture(m_swipeGestureType);
+#endif
 }
 
 int EPUBView::backgroundIndex() const
@@ -123,8 +126,10 @@ bool EPUBView::openFile(const QString &fileName)
 
     EPUBFile *newEPUB = new EPUBFile(fileName, this);
     if (newEPUB->status() == EPUBFile::NoError) {
+#if 0
         m_prevPageAction->setEnabled(false);
         m_nextPageAction->setEnabled(false);
+#endif
 
         if (m_epub) {
             manager->setDocument(0);
@@ -140,7 +145,9 @@ bool EPUBView::openFile(const QString &fileName)
         QUrl lastUrl = settings->lastUrlForFile(fileName);
         if (!lastUrl.isValid() || !m_epub->hasUrl(lastUrl)) {
             QUrl defaultUrl = m_epub->defaultUrl();
-            load(defaultUrl);
+            //load(defaultUrl);
+            //load(QUrl(QLatin1String("http://qt-project.org/")));
+            setHtml(QLatin1String("<h1>HELLO!</h1>"));
         } else
             load(lastUrl);
 

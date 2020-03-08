@@ -34,7 +34,7 @@ class EPUBView : public QWebEngineView {
     Q_PROPERTY(QByteArray tocDocument READ tocDocument)
 public:
     //explicit EPUBView(QGraphicsItem *parent = 0);
-    explicit EPUBView();
+    explicit EPUBView(QWidget *parent = 0);
 
     QString fileName() const;
     QAction *prevPageAction() const;

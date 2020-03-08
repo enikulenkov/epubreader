@@ -16,12 +16,12 @@ Flickable {
     function openTocDocumentRequest(path) {
         epubView.openTocDocumentRequest(path)
     }
-
+/*
     clip: true
     contentWidth: parent.width // Do not scroll in this direction
     contentHeight: Math.max(parent.height, epubView.height)
     pressDelay: 400 // Avoid selection
-
+*/
     /* TODO add key press handler */
 
     // FIXME Item is needed for Maemo

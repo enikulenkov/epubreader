@@ -97,9 +97,9 @@ Rectangle {
         PropertyChanges {target: epubView; anchors.bottom: mainView.bottom}
     }
 
-    Component.onCompleted: mainWindow.openTocDocumentRequest.connect(epubView.openTocDocumentRequest)
+    //Component.onCompleted: mainWindow.openTocDocumentRequest.connect(epubView.openTocDocumentRequest)
 
-    Component.onDestruction: {
-        settings.saveLastURL(epubView.fileName, epubView.url)
-    }
+    //Component.onDestruction: {
+        //settings.saveLastURL(epubView.fileName, epubView.url)
+    //}
 }
