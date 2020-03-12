@@ -46,7 +46,7 @@ HEADERS = \
     src/desktopnotifications.h \
     src/mainwindowbase.h
 
-CONFIG += qt warn_on link_pkgconfig
+CONFIG += qt warn_on link_pkgconfig debug
 
 QT += xmlpatterns gui network webenginewidgets dbus quickwidgets
 
