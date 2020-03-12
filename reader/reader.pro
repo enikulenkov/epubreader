@@ -12,6 +12,7 @@ LIBS += $$LIBLIBRARYMODEL $$LIBEPUB -lz
 PRE_TARGETDEPS += $$LIBEPUB $$LIBLIBRARYMODEL
 
 SOURCES = \
+    src/epuburlschemehandler.cpp \
     src/main.cxx \
     src/epubaccessmanager.cxx \
     src/epubreply.cxx \
@@ -32,6 +33,7 @@ SOURCES = \
 HEADERS = \
     src/epubaccessmanager.h \
     src/epubreply.h \
+    src/epuburlschemehandler.h \
     src/epubview.h \
     src/mainwindow.h \
     src/settingsdialog.h \
@@ -48,7 +50,7 @@ HEADERS = \
 
 CONFIG += qt warn_on link_pkgconfig debug
 
-QT += xmlpatterns gui network webenginewidgets dbus quickwidgets
+QT += xmlpatterns gui network webengine webenginewidgets dbus quickwidgets
 
 PKGCONFIG += libnotify
 

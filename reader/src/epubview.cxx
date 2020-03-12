@@ -43,16 +43,16 @@
 
 //EPUBView::EPUBView(QGraphicsItem *parent) :
     //QGraphicsWebView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
-EPUBView::EPUBView(QWidget *parent) :
-    QWebEngineView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
+EPUBView::EPUBView() :
+    m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
 {
 
-    QWebEngineSettings *s = settings();
+    //QWebEngineSettings *s = settings();
 
-    s->setAttribute(QWebEngineSettings::JavascriptEnabled, false);
+    //s->setAttribute(QWebEngineSettings::JavascriptEnabled, false);
     //s->setAttribute(QWebEngineSettings::JavaEnabled, false);
     //s->setAttribute(QWebEngineSettings::FrameFlatteningEnabled, true);
-    s->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, false);
+    //s->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, false);
 #if 0
     QWebFrame *frame = page()->mainFrame();
     frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
@@ -114,13 +114,20 @@ void EPUBView::setBackgroundIndex(int idx)
     resizeContent();
 }
 
+bool EPUBView::setUrl(const QUrl &url)
+{
+   m_url = url;
+   Q_EMIT urlChanged();
+   return true;
+}
+
 bool EPUBView::openFile(const QString &fileName)
 {
     if (fileName.isEmpty())
         return false;
 
-    EPUBReaderSettings *settings = EPUBReaderApplication::settings();
-    settings->saveLastURL(m_fileName, url());
+    //EPUBReaderSettings *settings = EPUBReaderApplication::settings();
+    //settings->saveLastURL(m_fileName, url());
 
     EPUBAccessManager *manager = new EPUBAccessManager();
 
@@ -141,15 +148,15 @@ bool EPUBView::openFile(const QString &fileName)
         manager->setDocument(m_epub);
         m_fileName = fileName;
 
+        setUrl(m_epub->defaultUrl());
         /* open last viewed page or default one if not found */
-        QUrl lastUrl = settings->lastUrlForFile(fileName);
-        if (!lastUrl.isValid() || !m_epub->hasUrl(lastUrl)) {
-            QUrl defaultUrl = m_epub->defaultUrl();
+        //QUrl lastUrl = settings->lastUrlForFile(fileName);
+        //if (!lastUrl.isValid() || !m_epub->hasUrl(lastUrl)) {
+            //QUrl defaultUrl = m_epub->defaultUrl();
             //load(defaultUrl);
             //load(QUrl(QLatin1String("http://qt-project.org/")));
-            setHtml(QLatin1String("<h1>HELLO!</h1>"));
-        } else
-            load(lastUrl);
+        //} else
+            //load(lastUrl);
 
         return true;
     }
@@ -166,6 +173,11 @@ QString EPUBView::fileName() const
     return m_fileName;
 }
 
+QUrl EPUBView::url() const
+{
+    return m_url;
+}
+
 QAction *EPUBView::prevPageAction() const
 {
     return m_prevPageAction;
@@ -176,6 +188,7 @@ QAction *EPUBView::nextPageAction() const
     return m_nextPageAction;
 }
 
+#if 0
 bool EPUBView::showPrevPage()
 {
     if (url().scheme() != QLatin1String("epub"))
@@ -197,6 +210,7 @@ bool EPUBView::showNextPage()
     load(newUrl);
     return true;
 }
+#endif
 
 void EPUBView::handleUrlChange(const QUrl &url)
 {
@@ -280,10 +294,11 @@ QByteArray EPUBView::tocDocument() const
 
 void EPUBView::openTocDocumentRequest(const QString &path)
 {
+    (void)path;
     if (!m_epub)
         return;
 
-    load(m_epub->resolveTocUrl(QUrl(path)));
+    //load(m_epub->resolveTocUrl(QUrl(path)));
 }
 
 bool EPUBView::sceneEvent(QEvent *event)
@@ -294,12 +309,14 @@ bool EPUBView::sceneEvent(QEvent *event)
         if (g->state() == Qt::GestureFinished) {
             if (!g->left()) {
                 if (m_prevPageAction->isEnabled())
-                    showPrevPage();
+                    //showPrevPage();
+                    (void)0;
                 else
                     DesktopNotifications::showInfoprint(tr("Already at first page"));
             } else {
                 if (m_nextPageAction->isEnabled())
-                    showNextPage();
+                    //showNextPage();
+                    (void)0;
                 else
                     DesktopNotifications::showInfoprint(tr("Already at last page"));
             }

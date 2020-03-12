@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtWebEngine 1.10
 import "content"
 import "content/Icons.js" as Icons
 
@@ -9,9 +10,13 @@ Rectangle {
 
     color: activePalette.base // TODO maybe window?
 
-    FlickableEPUBView {
+    WebEngineView {
         id: epubView
 
+        url: eView.url
+        anchors.fill: parent
+        objectName: "webView"
+        /*
         fileName: mainWindow.fileName
         textSizeMultiplier: settings.textSizeMultiplier
         defaultFont: settings.fontFamily
@@ -21,12 +26,15 @@ Rectangle {
 
         onMovementStarted: scrollBar.state = "visible"
         onMovementEnded: scrollBar.state = ""
+        */
     }
 
+    /*
     ScrollBar {
         id: scrollBar
         area: epubView
     }
+    */
 
     Rectangle {
         id: toolBar

@@ -17,11 +17,13 @@
 #ifndef EPUBVIEW_H
 #define EPUBVIEW_H
 
-#include <QWebEngineView>
+#include <QObject>
+#include <QAction>
+#include <QUrl>
 
 class EPUBFile;
 
-class EPUBView : public QWebEngineView {
+class EPUBView : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString fileName READ fileName WRITE openFile)
     Q_PROPERTY(QAction* prevPage READ prevPageAction CONSTANT)
@@ -32,11 +34,13 @@ class EPUBView : public QWebEngineView {
     Q_PROPERTY(QString defaultFont READ defaultFont WRITE setDefaultFont)
     Q_PROPERTY(int backgroundIndex READ backgroundIndex WRITE setBackgroundIndex)
     Q_PROPERTY(QByteArray tocDocument READ tocDocument)
+    Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
 public:
     //explicit EPUBView(QGraphicsItem *parent = 0);
-    explicit EPUBView(QWidget *parent = 0);
+    explicit EPUBView();
 
     QString fileName() const;
+    QUrl url() const;
     QAction *prevPageAction() const;
     QAction *nextPageAction() const;
 
@@ -56,9 +60,12 @@ public:
 
 public Q_SLOTS:
     bool openFile(const QString &fileName);
+    bool setUrl(const QUrl &url);
 
+#if 0
     bool showPrevPage();
     bool showNextPage();
+#endif
 
     void setPreferredWidth(int width);
     void setPreferredHeight(int height);
@@ -66,6 +73,7 @@ public Q_SLOTS:
     void openTocDocumentRequest(const QString &path);
 
 Q_SIGNALS:
+    void urlChanged();
     void preferredHeightChanged();
     void preferredWidthChanged();
 
@@ -81,6 +89,7 @@ private Q_SLOTS:
 private:
     void resizeContent();
 
+    QUrl m_url;
     EPUBFile *m_epub;
     QString m_fileName;
 
