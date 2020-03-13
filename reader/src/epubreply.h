@@ -17,25 +17,28 @@
 #ifndef EPUBREPLY_H
 #define EPUBREPLY_H
 
-#include <QNetworkReply>
+#include <QWebEngineUrlRequestJob>
+#include <QNetworkAccessManager>
 #include <QPointer>
 #include "epubfile.h"
 
-class EPUBReply : public QNetworkReply {
+class EPUBReply : public QIODevice {
     Q_OBJECT
 public:
-    explicit EPUBReply(EPUBFile *epub, QNetworkAccessManager::Operation op, const QNetworkRequest &req, QObject *parent = 0);
-    virtual void abort();
+    explicit EPUBReply(EPUBFile *epub, QNetworkAccessManager::Operation op, const QWebEngineUrlRequestJob *job, QObject *parent = 0);
     virtual bool isSequential() const;
     virtual qint64 bytesAvailable() const;
+    void processRequest();
+    const QByteArray mimeType();
 protected:
     virtual qint64 readData(char *data, qint64 maxlen);
-private Q_SLOTS:
-    void processRequest();
+    virtual qint64 writeData(const char *data, qint64 maxlen);
 private:
     QPointer<EPUBFile> m_epub;
     QByteArray m_content;
+    QString m_mimeType;
     qint64 m_position;
+    const QWebEngineUrlRequestJob *m_job;
 };
 
 #endif

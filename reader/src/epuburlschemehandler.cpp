@@ -1,17 +1,18 @@
 #include "epuburlschemehandler.h"
+#include <QWebEngineUrlRequestJob>
+#include <QNetworkAccessManager>
+#include "epubreply.h"
 
-EPUBUrlSchemeHandler::EPUBUrlSchemeHandler()
+EPUBUrlSchemeHandler::EPUBUrlSchemeHandler(EPUBView *view)
 {
-
+    m_view = view;
 }
 
-//QNetworkReply *EPUBAccessManager::createRequest(Operation op, const QNetworkRequest &request, QIODevice *outgoingData)
-//{
-    //Q_UNUSED(outgoingData);
-    //return new EPUBReply(m_epub, op, request);
-//}
-
-void EPUBUrlSchemeHandler::requestStarted(QWebEngineUrlRequestJob *)
+void EPUBUrlSchemeHandler::requestStarted(QWebEngineUrlRequestJob *job)
 {
-    Q_ASSERT(0);
+    EPUBReply *reply = new EPUBReply(m_view->epubFile(), QNetworkAccessManager::GetOperation, job);
+
+    reply->processRequest();
+
+    job->reply(reply->mimeType(), reply);
 }

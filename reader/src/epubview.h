@@ -40,6 +40,7 @@ public:
     explicit EPUBView();
 
     QString fileName() const;
+    EPUBFile *epubFile() const;
     QUrl url() const;
     QAction *prevPageAction() const;
     QAction *nextPageAction() const;

@@ -173,6 +173,11 @@ QString EPUBView::fileName() const
     return m_fileName;
 }
 
+EPUBFile *EPUBView::epubFile() const
+{
+    return m_epub;
+}
+
 QUrl EPUBView::url() const
 {
     return m_url;

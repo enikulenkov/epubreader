@@ -34,9 +34,9 @@
 #include "hildonimageprovider.h"
 #include "epuburlschemehandler.h"
 
-void installEpubUrlSchemeHandler(QQuickWebEngineProfile *profile)
+void installEpubUrlSchemeHandler(QQuickWebEngineProfile *profile, EPUBView *view)
 {
-    EPUBUrlSchemeHandler *handler = new EPUBUrlSchemeHandler();
+    EPUBUrlSchemeHandler *handler = new EPUBUrlSchemeHandler(view);
     profile->installUrlSchemeHandler("epub", handler);
 }
 
@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     bool conv = var.convert(1436);
     Q_ASSERT(conv);
     QQuickWebEngineProfile *profile = var.value<QQuickWebEngineProfile *>();
-    installEpubUrlSchemeHandler(profile);
+    installEpubUrlSchemeHandler(profile, m_epubView);
 
     QWidget *container = QWidget::createWindowContainer(view);
     setCentralWidget(container);
