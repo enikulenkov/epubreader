@@ -64,8 +64,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject *webview = object->findChild<QObject*>(QLatin1String("webView"));
     Q_ASSERT(webview != NULL);
     QVariant var = QQmlProperty(webview, QLatin1String("profile")).read();
-    bool conv = var.convert(1436);
-    Q_ASSERT(conv);
     QQuickWebEngineProfile *profile = var.value<QQuickWebEngineProfile *>();
     installEpubUrlSchemeHandler(profile, m_epubView);
 
