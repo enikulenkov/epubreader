@@ -23,7 +23,7 @@ class HildonImageProvider : public QQuickImageProvider {
 public:
     HildonImageProvider();
 
-    virtual QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
+    QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize) override;
 };
 
 #endif

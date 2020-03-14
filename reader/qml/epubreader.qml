@@ -48,13 +48,13 @@ Rectangle {
 
             Button {
                 id: prevButton
-                //image: "image://hildon-icon/" + Icons.previousPageIcon
+                image: "image://hildon-icon/" + Icons.previousPageIcon
                 action: eView.prevPage
             }
 
             Button {
                 id: tocButton
-                //image: "image://hildon-icon/" + Icons.showTocIcon
+                image: "image://hildon-icon/" + Icons.showTocIcon
 
                 onClicked: {
                     mainWindow.showToc(eView.tocDocument)
@@ -63,13 +63,13 @@ Rectangle {
 
             Button {
                 id: nextButton
-                //image: "image://hildon-icon/" + Icons.nextPageIcon
+                image: "image://hildon-icon/" + Icons.nextPageIcon
                 action: eView.nextPage
             }
         }
         Button {
             id: fullSizeButton
-            //image: "image://hildon-icon/" + Icons.showFullSizeIcon
+            image: "image://hildon-icon/" + Icons.showFullSizeIcon
             onClicked: {
                 mainWindow.fullSize = true
             }
@@ -86,7 +86,7 @@ Rectangle {
 
         Button {
             id: normalSizeButton
-            //image: "image://hildon-icon/" + Icons.showNormalIcon
+            image: "image://hildon-icon/" + Icons.showNormalIcon
             opacity: 0.4
 
             onClicked: {
