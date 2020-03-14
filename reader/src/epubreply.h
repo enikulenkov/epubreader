@@ -28,8 +28,9 @@ public:
     explicit EPUBReply(EPUBFile *epub, QNetworkAccessManager::Operation op, const QWebEngineUrlRequestJob *job, QObject *parent = 0);
     virtual bool isSequential() const;
     virtual qint64 bytesAvailable() const;
-    void processRequest();
     const QByteArray mimeType();
+Q_SLOT
+    void processRequest();
 protected:
     virtual qint64 readData(char *data, qint64 maxlen);
     virtual qint64 writeData(const char *data, qint64 maxlen);

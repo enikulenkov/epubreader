@@ -24,7 +24,9 @@ EPUBReply::EPUBReply(EPUBFile *epub, QNetworkAccessManager::Operation op, const 
 {
     (void)op;
     m_job = job;
-    QTimer::singleShot(0, this, SLOT(processRequest()));
+    //FIXME
+    //It is done for asynchronous page loading, not used for now, processRequest is called directly.
+    //QTimer::singleShot(0, this, SLOT(processRequest()));
     qDebug() << "Loading" << job->requestUrl().toString();
 }
 
