@@ -57,7 +57,7 @@ Rectangle {
                 //image: "image://hildon-icon/" + Icons.showTocIcon
 
                 onClicked: {
-                    mainWindow.showToc(epubView.tocDocument)
+                    mainWindow.showToc(eView.tocDocument)
                 }
             }
 
@@ -105,7 +105,7 @@ Rectangle {
         PropertyChanges {target: epubView; anchors.bottom: mainView.bottom}
     }
 
-    //Component.onCompleted: mainWindow.openTocDocumentRequest.connect(epubView.openTocDocumentRequest)
+    Component.onCompleted: mainWindow.openTocDocumentRequest.connect(eView.openTocDocumentRequest)
 
     //Component.onDestruction: {
         //settings.saveLastURL(epubView.fileName, epubView.url)

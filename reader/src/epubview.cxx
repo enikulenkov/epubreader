@@ -300,7 +300,7 @@ void EPUBView::openTocDocumentRequest(const QString &path)
     if (!m_epub)
         return;
 
-    //load(m_epub->resolveTocUrl(QUrl(path)));
+    setUrl(m_epub->resolveTocUrl(QUrl(path)));
 }
 
 bool EPUBView::sceneEvent(QEvent *event)
