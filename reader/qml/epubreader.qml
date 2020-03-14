@@ -49,7 +49,7 @@ Rectangle {
             Button {
                 id: prevButton
                 //image: "image://hildon-icon/" + Icons.previousPageIcon
-                action: epubView.prevPage
+                action: eView.prevPage
             }
 
             Button {
@@ -64,7 +64,7 @@ Rectangle {
             Button {
                 id: nextButton
                 //image: "image://hildon-icon/" + Icons.nextPageIcon
-                action: epubView.nextPage
+                action: eView.nextPage
             }
         }
         Button {

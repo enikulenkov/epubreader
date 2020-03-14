@@ -36,7 +36,6 @@ class EPUBView : public QObject {
     Q_PROPERTY(QByteArray tocDocument READ tocDocument)
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
 public:
-    //explicit EPUBView(QGraphicsItem *parent = 0);
     explicit EPUBView();
 
     QString fileName() const;
@@ -63,10 +62,8 @@ public Q_SLOTS:
     bool openFile(const QString &fileName);
     bool setUrl(const QUrl &url);
 
-#if 0
     bool showPrevPage();
     bool showNextPage();
-#endif
 
     void setPreferredWidth(int width);
     void setPreferredHeight(int height);
@@ -74,7 +71,7 @@ public Q_SLOTS:
     void openTocDocumentRequest(const QString &path);
 
 Q_SIGNALS:
-    void urlChanged();
+    void urlChanged(const QUrl &url);
     void preferredHeightChanged();
     void preferredWidthChanged();
 

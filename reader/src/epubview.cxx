@@ -60,7 +60,7 @@ EPUBView::EPUBView() :
 
     page()->setNetworkAccessManager(new EPUBAccessManager);
     page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
-
+#endif
 
     m_prevPageAction = new QAction(this);
     m_nextPageAction = new QAction(this);
@@ -73,6 +73,7 @@ EPUBView::EPUBView() :
 
     connect(this, SIGNAL(urlChanged(QUrl)), SLOT(handleUrlChange(QUrl)));
 
+#if 0
     //QWebSecurityOrigin::addLocalScheme(QLatin1String("epub"));
     connect(this, SIGNAL(linkClicked(QUrl)), SLOT(handleExternalLink(QUrl)));
 
@@ -117,7 +118,7 @@ void EPUBView::setBackgroundIndex(int idx)
 bool EPUBView::setUrl(const QUrl &url)
 {
    m_url = url;
-   Q_EMIT urlChanged();
+   Q_EMIT urlChanged(url);
    return true;
 }
 
@@ -133,10 +134,8 @@ bool EPUBView::openFile(const QString &fileName)
 
     EPUBFile *newEPUB = new EPUBFile(fileName, this);
     if (newEPUB->status() == EPUBFile::NoError) {
-#if 0
         m_prevPageAction->setEnabled(false);
         m_nextPageAction->setEnabled(false);
-#endif
 
         if (m_epub) {
             manager->setDocument(0);
@@ -193,7 +192,6 @@ QAction *EPUBView::nextPageAction() const
     return m_nextPageAction;
 }
 
-#if 0
 bool EPUBView::showPrevPage()
 {
     if (url().scheme() != QLatin1String("epub"))
@@ -201,7 +199,7 @@ bool EPUBView::showPrevPage()
     if (!m_epub)
         return false;
     QUrl newUrl = m_epub->getPrevPage(url()); // TODO check if page is the same
-    load(newUrl);
+    setUrl(newUrl);
     return true;
 }
 
@@ -212,10 +210,9 @@ bool EPUBView::showNextPage()
     if (!m_epub)
         return false;
     QUrl newUrl = m_epub->getNextPage(url()); // TODO check if page is the same
-    load(newUrl);
+    setUrl(newUrl);
     return true;
 }
-#endif
 
 void EPUBView::handleUrlChange(const QUrl &url)
 {
@@ -314,14 +311,12 @@ bool EPUBView::sceneEvent(QEvent *event)
         if (g->state() == Qt::GestureFinished) {
             if (!g->left()) {
                 if (m_prevPageAction->isEnabled())
-                    //showPrevPage();
-                    (void)0;
+                    showPrevPage();
                 else
                     DesktopNotifications::showInfoprint(tr("Already at first page"));
             } else {
                 if (m_nextPageAction->isEnabled())
-                    //showNextPage();
-                    (void)0;
+                    showNextPage();
                 else
                     DesktopNotifications::showInfoprint(tr("Already at last page"));
             }
