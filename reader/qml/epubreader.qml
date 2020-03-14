@@ -107,7 +107,7 @@ Rectangle {
 
     Component.onCompleted: mainWindow.openTocDocumentRequest.connect(eView.openTocDocumentRequest)
 
-    //Component.onDestruction: {
-        //settings.saveLastURL(epubView.fileName, epubView.url)
-    //}
+    Component.onDestruction: {
+        settings.saveLastURL(eView.fileName, eView.url)
+    }
 }

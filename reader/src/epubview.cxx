@@ -127,8 +127,8 @@ bool EPUBView::openFile(const QString &fileName)
     if (fileName.isEmpty())
         return false;
 
-    //EPUBReaderSettings *settings = EPUBReaderApplication::settings();
-    //settings->saveLastURL(m_fileName, url());
+    EPUBReaderSettings *settings = EPUBReaderApplication::settings();
+    settings->saveLastURL(m_fileName, url());
 
     EPUBAccessManager *manager = new EPUBAccessManager();
 
@@ -147,15 +147,13 @@ bool EPUBView::openFile(const QString &fileName)
         manager->setDocument(m_epub);
         m_fileName = fileName;
 
-        setUrl(m_epub->defaultUrl());
         /* open last viewed page or default one if not found */
-        //QUrl lastUrl = settings->lastUrlForFile(fileName);
-        //if (!lastUrl.isValid() || !m_epub->hasUrl(lastUrl)) {
-            //QUrl defaultUrl = m_epub->defaultUrl();
-            //load(defaultUrl);
-            //load(QUrl(QLatin1String("http://qt-project.org/")));
-        //} else
-            //load(lastUrl);
+        QUrl lastUrl = settings->lastUrlForFile(fileName);
+        if (!lastUrl.isValid() || !m_epub->hasUrl(lastUrl)) {
+            QUrl defaultUrl = m_epub->defaultUrl();
+            setUrl(defaultUrl);
+        } else
+            setUrl(lastUrl);
 
         return true;
     }
