@@ -21,12 +21,15 @@
 #include <QWebEnginePage>
 #include <QWebEngineSettings>
 #include <QDebug>
+#include <QQuickWebEngineProfile>
 //#include <QWebSecurityOrigin>
 #include <QDesktopServices>
 #include "epubreaderapplication.h"
 #include "epubreadersettings.h"
 #include "horizmouseswipegesture.h"
 #include "desktopnotifications.h"
+#include "epuburlschemehandler.h"
+#include "epubfile.h"
 
 #define STYLESHEET_TEMPLATE \
     "html {" \
@@ -44,7 +47,7 @@
 //EPUBView::EPUBView(QGraphicsItem *parent) :
     //QGraphicsWebView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
 EPUBView::EPUBView() :
-    m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
+    m_epub(0), m_preferredWidth(800), m_preferredHeight(600), m_schemeHandler()
 {
 
     //QWebEngineSettings *s = settings();
@@ -122,6 +125,12 @@ bool EPUBView::setUrl(const QUrl &url)
    return true;
 }
 
+void EPUBView::installEpubUrlSchemeHandler()
+{
+    m_schemeHandler.setFile(*m_epub);
+    QQuickWebEngineProfile::defaultProfile()->installUrlSchemeHandler("epub", &m_schemeHandler);
+}
+
 bool EPUBView::openFile(const QString &fileName)
 {
     if (fileName.isEmpty())
@@ -143,6 +152,7 @@ bool EPUBView::openFile(const QString &fileName)
         }
 
         m_epub = newEPUB;
+        this->installEpubUrlSchemeHandler();
 
         manager->setDocument(m_epub);
         m_fileName = fileName;
@@ -168,11 +178,6 @@ bool EPUBView::openFile(const QString &fileName)
 QString EPUBView::fileName() const
 {
     return m_fileName;
-}
-
-EPUBFile *EPUBView::epubFile() const
-{
-    return m_epub;
 }
 
 QUrl EPUBView::url() const

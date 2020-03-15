@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import EPUBReader 1.0
+import QtWebEngine 1.10
 
 Flickable {
     id: flickable
@@ -10,8 +11,8 @@ Flickable {
     property alias textSizeMultiplier: epubView.textSizeMultiplier
     property alias defaultFont: epubView.defaultFont
     property alias backgroundIndex: epubView.backgroundIndex
-    property alias tocDocument: epubView.tocDocument
     property alias url: epubView.url
+    property alias tocDocument: epubView.tocDocument
 
     function openTocDocumentRequest(path) {
         epubView.openTocDocumentRequest(path)
@@ -38,5 +39,12 @@ Flickable {
                 flickable.contentY = 0
             }
         }
+    }
+
+    WebEngineView {
+        id: epubWebEngine
+
+        anchors.fill: parent
+        url: epubView.url
     }
 }

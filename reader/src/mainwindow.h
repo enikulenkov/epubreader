@@ -55,7 +55,6 @@ private:
     QString m_fileName;
     bool m_orientationOverride;
     bool m_showLibrary;
-    EPUBView *m_epubView;
 
     void showHelperWindow(QMainWindow *win);
 };

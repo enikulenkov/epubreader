@@ -2,16 +2,17 @@
 #define EPUBURLSCHEMEHANDLER_H
 
 #include <QWebEngineUrlSchemeHandler>
-#include "epubview.h"
+#include "epubfile.h"
 
 class EPUBUrlSchemeHandler : public QWebEngineUrlSchemeHandler
 {
 public:
-    EPUBUrlSchemeHandler(EPUBView *view);
+    EPUBUrlSchemeHandler();
     void requestStarted(QWebEngineUrlRequestJob *) override;
+    void setFile(EPUBFile &file);
 
 private:
-    EPUBView *m_view;
+    EPUBFile *m_file;
 };
 
 #endif // EPUBURLSCHEMEHANDLER_H

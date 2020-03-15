@@ -10,16 +10,17 @@ Rectangle {
 
     color: activePalette.base // TODO maybe window?
 
-    WebEngineView {
+    FlickableEPUBView {
         id: epubView
 
-        url: eView.url
         anchors.fill: parent
         objectName: "webView"
-        /*
         fileName: mainWindow.fileName
+        /*
         textSizeMultiplier: settings.textSizeMultiplier
+        */
         defaultFont: settings.fontFamily
+        /*
         backgroundIndex: settings.colorIndex
 
         anchors {top: parent.top; left: parent.left; right: parent.right; bottom: toolBar.top}
@@ -49,7 +50,7 @@ Rectangle {
             Button {
                 id: prevButton
                 image: "image://hildon-icon/" + Icons.previousPageIcon
-                action: eView.prevPage
+                action: epubView.prevPage
             }
 
             Button {
@@ -57,14 +58,14 @@ Rectangle {
                 image: "image://hildon-icon/" + Icons.showTocIcon
 
                 onClicked: {
-                    mainWindow.showToc(eView.tocDocument)
+                    mainWindow.showToc(epubView.tocDocument)
                 }
             }
 
             Button {
                 id: nextButton
                 image: "image://hildon-icon/" + Icons.nextPageIcon
-                action: eView.nextPage
+                action: epubView.nextPage
             }
         }
         Button {
@@ -105,9 +106,9 @@ Rectangle {
         PropertyChanges {target: epubView; anchors.bottom: mainView.bottom}
     }
 
-    Component.onCompleted: mainWindow.openTocDocumentRequest.connect(eView.openTocDocumentRequest)
+    Component.onCompleted: mainWindow.openTocDocumentRequest.connect(epubView.openTocDocumentRequest)
 
     Component.onDestruction: {
-        settings.saveLastURL(eView.fileName, eView.url)
+        settings.saveLastURL(epubView.fileName, epubView.url)
     }
 }

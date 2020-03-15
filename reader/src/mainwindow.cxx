@@ -32,24 +32,15 @@
 #include "epubreaderapplication.h"
 #include "epubtocwindow.h"
 #include "hildonimageprovider.h"
-#include "epuburlschemehandler.h"
-
-void installEpubUrlSchemeHandler(QQuickWebEngineProfile *profile, EPUBView *view)
-{
-    EPUBUrlSchemeHandler *handler = new EPUBUrlSchemeHandler(view);
-    profile->installUrlSchemeHandler("epub", handler);
-}
 
 MainWindow::MainWindow(QWidget *parent) :
     MainWindowBase(parent), m_orientationOverride(false), m_showLibrary(false)
 {
     setWindowTitle(tr("E-Book Reader"));
 
-    m_epubView = new EPUBView();
     QQuickView *view = new QQuickView;
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->rootContext()->setContextProperty(QLatin1String("mainWindow"), this);
-    view->rootContext()->setContextProperty(QLatin1String("eView"), m_epubView);
     EPUBReaderSettings *settings = EPUBReaderApplication::settings();
     view->rootContext()->setContextProperty(QLatin1String("settings"), settings);
 #ifdef Q_WS_MAEMO_5
@@ -59,13 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
     view->engine()->addImageProvider(QLatin1String("hildon-icon"), new HildonImageProvider);
     view->setSource(QUrl(QLatin1String("qrc:/qml/epubreader.qml")));
-
-    QQuickItem *object = view->rootObject();
-    QObject *webview = object->findChild<QObject*>(QLatin1String("webView"));
-    Q_ASSERT(webview != NULL);
-    QVariant var = QQmlProperty(webview, QLatin1String("profile")).read();
-    QQuickWebEngineProfile *profile = var.value<QQuickWebEngineProfile *>();
-    installEpubUrlSchemeHandler(profile, m_epubView);
 
     QWidget *container = QWidget::createWindowContainer(view);
     setCentralWidget(container);
@@ -108,7 +92,6 @@ void MainWindow::openFile(QString newFileName)
 {
     if (newFileName != m_fileName) {
         m_fileName = newFileName;
-        m_epubView->openFile(m_fileName);
         Q_EMIT fileNameChanged();
     }
 }

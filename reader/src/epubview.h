@@ -20,6 +20,7 @@
 #include <QObject>
 #include <QAction>
 #include <QUrl>
+#include "epuburlschemehandler.h"
 
 class EPUBFile;
 
@@ -39,7 +40,6 @@ public:
     explicit EPUBView();
 
     QString fileName() const;
-    EPUBFile *epubFile() const;
     QUrl url() const;
     QAction *prevPageAction() const;
     QAction *nextPageAction() const;
@@ -86,6 +86,7 @@ private Q_SLOTS:
 
 private:
     void resizeContent();
+    void installEpubUrlSchemeHandler();
 
     QUrl m_url;
     EPUBFile *m_epub;
@@ -99,6 +100,8 @@ private:
     int m_preferredHeight;
 
     int m_backgroundIndex;
+
+    EPUBUrlSchemeHandler m_schemeHandler;
 
     Qt::GestureType m_swipeGestureType;
 };
