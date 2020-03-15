@@ -11,18 +11,18 @@ Flickable {
     property alias textSizeMultiplier: epubView.textSizeMultiplier
     property alias defaultFont: epubView.defaultFont
     property alias backgroundIndex: epubView.backgroundIndex
-    property alias url: epubView.url
     property alias tocDocument: epubView.tocDocument
+    property alias url: epubView.url
 
     function openTocDocumentRequest(path) {
         epubView.openTocDocumentRequest(path)
     }
-/*
+
     clip: true
     contentWidth: parent.width // Do not scroll in this direction
-    contentHeight: Math.max(parent.height, epubView.height)
+    contentHeight: Math.max(parent.height, epubWebEngine.height)
     pressDelay: 400 // Avoid selection
-*/
+
     /* TODO add key press handler */
 
     // FIXME Item is needed for Maemo

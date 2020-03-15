@@ -15,7 +15,6 @@ Item {
         anchors.fill: parent
     }
 
-/*
     Image {
         id: placeholder
         visible: !thumbnail.loaded
@@ -30,5 +29,4 @@ Item {
 
         anchors.fill: parent
     }
-*/
 }

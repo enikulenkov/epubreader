@@ -13,29 +13,21 @@ Rectangle {
     FlickableEPUBView {
         id: epubView
 
-        anchors.fill: parent
-        objectName: "webView"
         fileName: mainWindow.fileName
-        /*
         textSizeMultiplier: settings.textSizeMultiplier
-        */
         defaultFont: settings.fontFamily
-        /*
         backgroundIndex: settings.colorIndex
 
         anchors {top: parent.top; left: parent.left; right: parent.right; bottom: toolBar.top}
 
         onMovementStarted: scrollBar.state = "visible"
         onMovementEnded: scrollBar.state = ""
-        */
     }
 
-    /*
     ScrollBar {
         id: scrollBar
         area: epubView
     }
-    */
 
     Rectangle {
         id: toolBar
