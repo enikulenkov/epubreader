@@ -22,7 +22,6 @@
 #include <QWebEngineSettings>
 #include <QDebug>
 #include <QQuickWebEngineProfile>
-//#include <QWebSecurityOrigin>
 #include <QDesktopServices>
 #include "epubreaderapplication.h"
 #include "epubreadersettings.h"
@@ -44,18 +43,10 @@
         "margin-left: 10px !important" \
     "}"
 
-//EPUBView::EPUBView(QGraphicsItem *parent) :
-    //QGraphicsWebView(parent), m_epub(0), m_preferredWidth(800), m_preferredHeight(600)
 EPUBView::EPUBView() :
     m_epub(0), m_preferredWidth(800), m_preferredHeight(600), m_schemeHandler()
 {
 
-    //QWebEngineSettings *s = settings();
-
-    //s->setAttribute(QWebEngineSettings::JavascriptEnabled, false);
-    //s->setAttribute(QWebEngineSettings::JavaEnabled, false);
-    //s->setAttribute(QWebEngineSettings::FrameFlatteningEnabled, true);
-    //s->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, false);
 #if 0
     QWebFrame *frame = page()->mainFrame();
     frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
@@ -77,7 +68,6 @@ EPUBView::EPUBView() :
     connect(this, SIGNAL(urlChanged(QUrl)), SLOT(handleUrlChange(QUrl)));
 
 #if 0
-    //QWebSecurityOrigin::addLocalScheme(QLatin1String("epub"));
     connect(this, SIGNAL(linkClicked(QUrl)), SLOT(handleExternalLink(QUrl)));
 
     //setResizesToContents(true);

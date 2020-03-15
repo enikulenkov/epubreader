@@ -46,5 +46,7 @@ Flickable {
 
         anchors.fill: parent
         url: epubView.url
+        settings.javascriptEnabled: false
+        settings.localContentCanAccessFileUrls: false
     }
 }
