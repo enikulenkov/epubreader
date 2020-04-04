@@ -29,8 +29,6 @@ class EPUBView : public QObject {
     Q_PROPERTY(QString fileName READ fileName WRITE openFile)
     Q_PROPERTY(QAction* prevPage READ prevPageAction CONSTANT)
     Q_PROPERTY(QAction* nextPage READ nextPageAction CONSTANT)
-    Q_PROPERTY(int preferredWidth READ preferredWidth WRITE setPreferredWidth NOTIFY preferredWidthChanged)
-    Q_PROPERTY(int preferredHeight READ preferredHeight WRITE setPreferredHeight NOTIFY preferredHeightChanged)
     Q_PROPERTY(qreal textSizeMultiplier READ textSizeMultiplier WRITE setTextSizeMultiplier)
     Q_PROPERTY(QString defaultFont READ defaultFont WRITE setDefaultFont)
     Q_PROPERTY(int backgroundIndex READ backgroundIndex WRITE setBackgroundIndex)
@@ -43,9 +41,6 @@ public:
     QUrl url() const;
     QAction *prevPageAction() const;
     QAction *nextPageAction() const;
-
-    int preferredWidth() const;
-    int preferredHeight() const;
 
     qreal textSizeMultiplier() const;
     void setTextSizeMultiplier(qreal factor);
@@ -65,16 +60,10 @@ public Q_SLOTS:
     bool showPrevPage();
     bool showNextPage();
 
-    void setPreferredWidth(int width);
-    void setPreferredHeight(int height);
-
     void openTocDocumentRequest(const QString &path);
 
 Q_SIGNALS:
     void urlChanged(const QUrl &url);
-    void preferredHeightChanged();
-    void preferredWidthChanged();
-
     void badFile();
 
 protected:
@@ -94,10 +83,6 @@ private:
 
     QAction *m_prevPageAction;
     QAction *m_nextPageAction;
-
-
-    int m_preferredWidth;
-    int m_preferredHeight;
 
     int m_backgroundIndex;
 

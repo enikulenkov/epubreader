@@ -44,7 +44,7 @@
     "}"
 
 EPUBView::EPUBView() :
-    m_epub(0), m_preferredWidth(800), m_preferredHeight(600), m_schemeHandler()
+    m_epub(0), m_schemeHandler()
 {
 
 #if 0
@@ -219,37 +219,8 @@ void EPUBView::handleUrlChange(const QUrl &url)
     }
 }
 
-int EPUBView::preferredWidth() const
-{
-    return m_preferredWidth;
-}
-
-int EPUBView::preferredHeight() const
-{
-    return m_preferredHeight;
-}
-
-void EPUBView::setPreferredWidth(int width)
-{
-    if (width != m_preferredWidth) {
-        m_preferredWidth = width;
-        resizeContent();
-        Q_EMIT preferredWidthChanged();
-    }
-}
-
-void EPUBView::setPreferredHeight(int height)
-{
-    if (height != m_preferredHeight) {
-        m_preferredHeight = height;
-        resizeContent();
-        Q_EMIT preferredHeightChanged();
-    }
-}
-
 void EPUBView::resizeContent()
 {
-    //page()->setPreferredContentsSize(QSize(m_preferredWidth, m_preferredHeight));
     setTextSizeMultiplier(textSizeMultiplier()); // FIXME otherwise content may not feet view
 }
 

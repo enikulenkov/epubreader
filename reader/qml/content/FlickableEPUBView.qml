@@ -23,12 +23,8 @@ Rectangle {
     EPUBView {
         id: epubView
 
-        preferredWidth: flickable.width
-        preferredHeight: flickable.height
-
         onUrlChanged: {
-            flickable.contentX = 0
-            flickable.contentY = 0
+            console.log("New URL ", url);
         }
     }
 
