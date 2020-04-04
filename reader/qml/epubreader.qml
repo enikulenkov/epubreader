@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.14
 import QtWebEngine 1.10
 import "content"
 import "content/Icons.js" as Icons
@@ -20,14 +20,16 @@ Rectangle {
 
         anchors {top: parent.top; left: parent.left; right: parent.right; bottom: toolBar.top}
 
-        onMovementStarted: scrollBar.state = "visible"
-        onMovementEnded: scrollBar.state = ""
+        //onMovementStarted: scrollBar.state = "visible"
+        //onMovementEnded: scrollBar.state = ""
     }
 
+    /*
     ScrollBar {
         id: scrollBar
         area: epubView
     }
+    */
 
     Rectangle {
         id: toolBar
