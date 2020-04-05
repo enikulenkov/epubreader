@@ -30,19 +30,6 @@
 #include "epuburlschemehandler.h"
 #include "epubfile.h"
 
-#define STYLESHEET_TEMPLATE \
-    "html {" \
-        "background: %1 !important;" \
-        "margin-top: 0px !important" \
-    "}" \
-    "body {" \
-        "background: transparent !important;" \
-        "margin-top: 10px !important;" \
-        "margin-bottom: 10px !important;" \
-        "margin-right: 10px !important;" \
-        "margin-left: 10px !important" \
-    "}"
-
 EPUBView::EPUBView() :
     m_epub(0), m_textSizeMultiplier(1), m_schemeHandler()
 {
@@ -71,9 +58,11 @@ EPUBView::EPUBView() :
     connect(this, SIGNAL(linkClicked(QUrl)), SLOT(handleExternalLink(QUrl)));
 
     //setResizesToContents(true);
+#endif
 
-    //setBackgroundIndex(0);
+    setBackgroundIndex(0);
 
+#if 0
     m_swipeGestureType = EPUBReaderApplication::swipeGestureType();
     grabGesture(m_swipeGestureType);
 #endif
@@ -86,26 +75,11 @@ int EPUBView::backgroundIndex() const
 
 void EPUBView::setBackgroundIndex(int idx)
 {
-    m_backgroundIndex = idx;
-    QColor c;
-
-    switch (m_backgroundIndex) {
-    default:
-        c = QColor(Qt::white);
-        break;
-    case 1:
-        c = QColor(0xf1, 0xdc, 0x6b);
-        break;
-    case 2:
-        c = QColor(Qt::gray);
-        break;
+    if (m_backgroundIndex != idx) {
+        m_backgroundIndex = idx;
+        resizeContent();
+        Q_EMIT backgroundIndexChanged(idx);
     }
-
-    QString style = QString::fromLatin1(STYLESHEET_TEMPLATE).arg(c.name());
-    QByteArray userStyleSheet = style.toUtf8();
-    QByteArray url = QByteArray("data:text/css;charset=utf-8;base64,") + userStyleSheet.toBase64();
-    //settings()->setUserStyleSheetUrl(QUrl::fromEncoded(url));
-    resizeContent();
 }
 
 bool EPUBView::setUrl(const QUrl &url)

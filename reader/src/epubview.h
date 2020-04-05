@@ -31,7 +31,7 @@ class EPUBView : public QObject {
     Q_PROPERTY(QAction* nextPage READ nextPageAction CONSTANT)
     Q_PROPERTY(qreal textSizeMultiplier READ textSizeMultiplier WRITE setTextSizeMultiplier NOTIFY textSizeMultiplierChanged)
     Q_PROPERTY(QString defaultFont READ defaultFont WRITE setDefaultFont NOTIFY defaultFontChanged)
-    Q_PROPERTY(int backgroundIndex READ backgroundIndex WRITE setBackgroundIndex)
+    Q_PROPERTY(int backgroundIndex READ backgroundIndex WRITE setBackgroundIndex NOTIFY backgroundIndexChanged)
     Q_PROPERTY(QByteArray tocDocument READ tocDocument)
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
 public:
@@ -66,6 +66,7 @@ Q_SIGNALS:
     void urlChanged(const QUrl &url);
     void textSizeMultiplierChanged(qreal factor);
     void defaultFontChanged(QString defaultFont);
+    void backgroundIndexChanged(int index);
     void badFile();
 
 protected:

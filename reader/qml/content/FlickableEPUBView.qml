@@ -34,6 +34,10 @@ Rectangle {
         onDefaultFontChanged: {
             epubWebEngine.reload()
         }
+
+        onBackgroundIndexChanged: {
+            epubWebEngine.reload()
+        }
     }
 
     WebEngineView {
@@ -81,6 +85,30 @@ Rectangle {
             }
         }
 
+        function setBackgrounColorStr() {
+            var c;
+            switch (flickable.backgroundIndex) {
+            default:
+                c = "white";
+                break;
+            case 1:
+                c = "#f1dc6b"; // yellow
+                break;
+            case 2:
+                c = "grey";
+                break;
+            }
+
+            return "document.body.style.backgroundColor = '" + c +"';"
+        }
+
+        function setBodyMargins() {
+            return "document.body.style.setProperty('margin-top', '10px', 'important');" +
+                    "document.body.style.setProperty('margin-bottom', '10px', 'important');" +
+                    "document.body.style.setProperty('margin-right', '10px', 'important');" +
+                    "document.body.style.setProperty('margin-left', '10px', 'important');"
+        }
+
         function setFontStr() {
             if (defaultFont != '') {
                 return "var newStyle = document.createElement('style');" +
@@ -101,7 +129,9 @@ Rectangle {
             if (loadRequest.status == WebEngineView.LoadSucceededStatus) {
                 runJavaScript(
                             setFontStr() +
-                            setZoomStr()
+                            setZoomStr() +
+                            setBackgrounColorStr() +
+                            setBodyMargins()
                 );
             }
         }
