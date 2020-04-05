@@ -44,7 +44,7 @@
     "}"
 
 EPUBView::EPUBView() :
-    m_epub(0), m_schemeHandler()
+    m_epub(0), m_textSizeMultiplier(1), m_schemeHandler()
 {
 
 #if 0
@@ -226,29 +226,29 @@ void EPUBView::resizeContent()
 
 qreal EPUBView::textSizeMultiplier() const
 {
-    //return page()->mainFrame()->textSizeMultiplier();
-    return 1;
+    return m_textSizeMultiplier;
 }
 
 void EPUBView::setTextSizeMultiplier(qreal factor)
 {
-    //page()->mainFrame()->setTextSizeMultiplier(factor);
-    (void)factor;
+    if (!qFuzzyCompare(m_textSizeMultiplier, factor)) {
+        m_textSizeMultiplier = factor;
+        Q_EMIT textSizeMultiplierChanged(factor);
+    }
 }
 
 QString EPUBView::defaultFont() const
 {
-    //return settings()->fontFamily(QWebSettings::StandardFont);
-    // FIXME
-    QString str;
-    return str;
+    return m_defaultFont;
 }
 
 void EPUBView::setDefaultFont(const QString &font)
 {
-    //settings()->setFontFamily(QWebSettings::StandardFont, font);
-    (void)font;
-    resizeContent();
+    if (m_defaultFont != font) {
+        m_defaultFont = font;
+        resizeContent();
+        Q_EMIT defaultFontChanged(font);
+    }
 }
 
 QByteArray EPUBView::tocDocument() const

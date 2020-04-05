@@ -26,13 +26,21 @@ Rectangle {
         onUrlChanged: {
             console.log("New URL ", url);
         }
+
+        onTextSizeMultiplierChanged: {
+            epubWebEngine.reload()
+        }
+
+        onDefaultFontChanged: {
+            epubWebEngine.reload()
+        }
     }
 
     WebEngineView {
         id: epubWebEngine
 
         url: epubView.url
-        settings.javascriptEnabled: false
+        settings.javascriptEnabled: true
         settings.localContentCanAccessFileUrls: false
 
         anchors.fill: parent
@@ -63,6 +71,39 @@ Rectangle {
 
         onHeightChanged: {
             console.log("Height epubWebEngine ", height)
+        }
+
+        function setZoomStr() {
+            if (flickable.textSizeMultiplier != 1.0) {
+                return "document.body.style.zoom = " + flickable.textSizeMultiplier + ";";
+            } else {
+                return "";
+            }
+        }
+
+        function setFontStr() {
+            if (defaultFont != '') {
+                return "var newStyle = document.createElement('style');" +
+                        'newStyle.appendChild(document.createTextNode("' +
+                        "@font-face { " +
+                        "font-family: userFont; " +
+                        "src: local('" + defaultFont + "'); " +
+                        "}" +
+                        '"));' +
+                        "document.head.appendChild(newStyle);" +
+                        "document.body.style.fontFamily = 'userFont';"
+            } else {
+                return "";
+            }
+        }
+
+        onLoadingChanged: {
+            if (loadRequest.status == WebEngineView.LoadSucceededStatus) {
+                runJavaScript(
+                            setFontStr() +
+                            setZoomStr()
+                );
+            }
         }
     }
 

@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->rootContext()->setContextProperty(QLatin1String("mainWindow"), this);
     EPUBReaderSettings *settings = EPUBReaderApplication::settings();
-    view->rootContext()->setContextProperty(QLatin1String("settings"), settings);
+    view->rootContext()->setContextProperty(QLatin1String("epubSettings"), settings);
 #ifdef Q_WS_MAEMO_5
     view->rootContext()->setContextProperty(QLatin1String("runOnMaemo"), QVariant(true));
 #else

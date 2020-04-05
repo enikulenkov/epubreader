@@ -14,9 +14,9 @@ Rectangle {
         id: epubView
 
         fileName: mainWindow.fileName
-        textSizeMultiplier: settings.textSizeMultiplier
-        defaultFont: settings.fontFamily
-        backgroundIndex: settings.colorIndex
+        textSizeMultiplier: epubSettings.textSizeMultiplier
+        defaultFont: epubSettings.fontFamily
+        backgroundIndex: epubSettings.colorIndex
 
         anchors {top: parent.top; left: parent.left; right: parent.right; bottom: toolBar.top}
 
@@ -103,6 +103,6 @@ Rectangle {
     Component.onCompleted: mainWindow.openTocDocumentRequest.connect(epubView.openTocDocumentRequest)
 
     Component.onDestruction: {
-        settings.saveLastURL(epubView.fileName, epubView.url)
+        epubSettings.saveLastURL(epubView.fileName, epubView.url)
     }
 }
