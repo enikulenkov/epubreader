@@ -77,7 +77,6 @@ Q_SIGNALS:
     void documentOpened();
 
 protected:
-    virtual bool sceneEvent(QEvent *event);
 
 private Q_SLOTS:
     void handleUrlChange(const QUrl &url);
@@ -99,8 +98,6 @@ private:
     int m_backgroundIndex;
 
     EPUBUrlSchemeHandler m_schemeHandler;
-
-    Qt::GestureType m_swipeGestureType;
 };
 
 #endif

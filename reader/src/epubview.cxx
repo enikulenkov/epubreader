@@ -25,7 +25,6 @@
 #include <QDesktopServices>
 #include "epubreaderapplication.h"
 #include "epubreadersettings.h"
-#include "horizmouseswipegesture.h"
 #include "desktopnotifications.h"
 #include "epuburlschemehandler.h"
 #include "epubfile.h"
@@ -61,11 +60,6 @@ EPUBView::EPUBView() :
 #endif
 
     setBackgroundIndex(0);
-
-#if 0
-    m_swipeGestureType = EPUBReaderApplication::swipeGestureType();
-    grabGesture(m_swipeGestureType);
-#endif
 }
 
 int EPUBView::backgroundIndex() const
@@ -272,31 +266,6 @@ void EPUBView::openTocDocumentRequest(const QString &path)
         return;
 
     setUrl(m_epub->resolveTocUrl(QUrl(path)));
-}
-
-bool EPUBView::sceneEvent(QEvent *event)
-{
-    if (event->type() == QEvent::Gesture) {
-        QGestureEvent *ge = static_cast<QGestureEvent *>(event);
-        HorizMouseSwipeGesture *g = static_cast<HorizMouseSwipeGesture *>(ge->gesture(m_swipeGestureType));
-        if (g->state() == Qt::GestureFinished) {
-            if (!g->left()) {
-                if (m_prevPageAction->isEnabled())
-                    showPrevPage();
-                else
-                    DesktopNotifications::showInfoprint(tr("Already at first page"));
-            } else {
-                if (m_nextPageAction->isEnabled())
-                    showNextPage();
-                else
-                    DesktopNotifications::showInfoprint(tr("Already at last page"));
-            }
-        }
-        return true;
-    }
-
-    //return QGraphicsWebView::sceneEvent(event);
-    return false;
 }
 
 void EPUBView::handleExternalLink(const QUrl &url)

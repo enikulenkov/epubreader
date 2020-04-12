@@ -31,7 +31,6 @@ public:
 
     void openFile(const QString &fileName);
     static EPUBReaderSettings *settings();
-    static Qt::GestureType swipeGestureType();
 
     void topApplication();
 
@@ -42,7 +41,6 @@ private:
     void showNewWindow(MainWindow *win);
 
     EPUBReaderSettings *m_settings;
-    Qt::GestureType m_swipeGestureType;
     bool m_topDone;
 };
 

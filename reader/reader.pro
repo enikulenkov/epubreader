@@ -23,8 +23,6 @@ SOURCES = \
     src/epublibrarybrowser.cxx \
     src/epubreadersettings.cxx \
     src/epubtocwindow.cxx \
-    src/horizmouseswipegesture.cxx \
-    src/horizmouseswipegesturerecognizer.cxx \
     src/epubtocmodel.cxx \
     src/hildonimageprovider.cxx \
     src/desktopnotifications.cxx \
@@ -41,8 +39,6 @@ HEADERS = \
     src/epublibrarybrowser.h \
     src/epubreadersettings.h \
     src/epubtocwindow.h \
-    src/horizmouseswipegesture.h \
-    src/horizmouseswipegesturerecognizer.h \
     src/epubtocmodel.h \
     src/hildonimageprovider.h \
     src/desktopnotifications.h \
