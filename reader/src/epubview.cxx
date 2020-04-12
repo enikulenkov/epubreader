@@ -15,7 +15,6 @@
  */
 
 #include "epubview.h"
-#include "epubaccessmanager.h"
 #include "epubfile.h"
 #include <QAction>
 #include <QWebEnginePage>
@@ -37,8 +36,6 @@ EPUBView::EPUBView() :
     QWebFrame *frame = page()->mainFrame();
     frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     frame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-
-    page()->setNetworkAccessManager(new EPUBAccessManager);
 #endif
 
     m_prevPageAction = new QAction(this);
@@ -90,22 +87,18 @@ bool EPUBView::openFile(const QString &fileName)
     EPUBReaderSettings *settings = EPUBReaderApplication::settings();
     settings->saveLastURL(m_fileName, url());
 
-    EPUBAccessManager *manager = new EPUBAccessManager();
-
     EPUBFile *newEPUB = new EPUBFile(fileName, this);
     if (newEPUB->status() == EPUBFile::NoError) {
         m_prevPageAction->setEnabled(false);
         m_nextPageAction->setEnabled(false);
 
         if (m_epub) {
-            manager->setDocument(0);
             delete m_epub;
         }
 
         m_epub = newEPUB;
         this->installEpubUrlSchemeHandler();
 
-        manager->setDocument(m_epub);
         m_fileName = fileName;
 
         /* open last viewed page or default one if not found */

@@ -14,7 +14,6 @@ PRE_TARGETDEPS += $$LIBEPUB $$LIBLIBRARYMODEL
 SOURCES = \
     src/epuburlschemehandler.cpp \
     src/main.cxx \
-    src/epubaccessmanager.cxx \
     src/epubreply.cxx \
     src/epubview.cxx \
     src/mainwindow.cxx \
@@ -29,7 +28,6 @@ SOURCES = \
     src/mainwindowbase.cxx
 
 HEADERS = \
-    src/epubaccessmanager.h \
     src/epubreply.h \
     src/epuburlschemehandler.h \
     src/epubview.h \
