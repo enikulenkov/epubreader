@@ -33,7 +33,8 @@ class EPUBView : public QObject {
     Q_PROPERTY(QString defaultFont READ defaultFont WRITE setDefaultFont NOTIFY defaultFontChanged)
     Q_PROPERTY(int backgroundIndex READ backgroundIndex WRITE setBackgroundIndex NOTIFY backgroundIndexChanged)
     Q_PROPERTY(QByteArray tocDocument READ tocDocument)
-    Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
+    Q_PROPERTY(QUrl url READ url NOTIFY urlChanged)
+    Q_PROPERTY(int pagesNum READ pagesNum NOTIFY pagesNumChanged)
 public:
     explicit EPUBView();
 
@@ -52,6 +53,7 @@ public:
     void setBackgroundIndex(int idx);
 
     QByteArray tocDocument() const;
+    int pagesNum() const;
 
 public Q_SLOTS:
     bool openFile(const QString &fileName);
@@ -59,6 +61,9 @@ public Q_SLOTS:
 
     bool showPrevPage();
     bool showNextPage();
+    void showPage(int idx);
+    QUrl getPageUrl(int pageNum);
+    int getPageIdx(const QUrl &url) const;
 
     void openTocDocumentRequest(const QString &path);
 
@@ -68,6 +73,8 @@ Q_SIGNALS:
     void defaultFontChanged(QString defaultFont);
     void backgroundIndexChanged(int index);
     void badFile();
+    void pagesNumChanged(int pagesNum);
+    void documentOpened();
 
 protected:
     virtual bool sceneEvent(QEvent *event);

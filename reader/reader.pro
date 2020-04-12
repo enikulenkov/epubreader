@@ -58,7 +58,7 @@ OTHER_FILES += \
     qml/epubreader.qml \
     qml/content/Button.qml \
     qml/content/ScrollBar.qml \
-    qml/content/FlickableEPUBView.qml \
+    qml/content/EPUBListView.qml \
     desktop/epubreader.desktop \
     icons/apubreader.png \
     icons/icon.svg \

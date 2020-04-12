@@ -84,9 +84,9 @@ void EPUBView::setBackgroundIndex(int idx)
 
 bool EPUBView::setUrl(const QUrl &url)
 {
-   m_url = url;
-   Q_EMIT urlChanged(url);
-   return true;
+    m_url = url;
+    Q_EMIT urlChanged(url);
+    return true;
 }
 
 void EPUBView::installEpubUrlSchemeHandler()
@@ -126,8 +126,13 @@ bool EPUBView::openFile(const QString &fileName)
         if (!lastUrl.isValid() || !m_epub->hasUrl(lastUrl)) {
             QUrl defaultUrl = m_epub->defaultUrl();
             setUrl(defaultUrl);
-        } else
+            Q_EMIT urlChanged(defaultUrl);
+        } else {
             setUrl(lastUrl);
+            Q_EMIT urlChanged(lastUrl);
+        }
+        Q_EMIT pagesNumChanged(pagesNum());
+        Q_EMIT documentOpened();
 
         return true;
     }
@@ -179,6 +184,34 @@ bool EPUBView::showNextPage()
     QUrl newUrl = m_epub->getNextPage(url()); // TODO check if page is the same
     setUrl(newUrl);
     return true;
+}
+
+void EPUBView::showPage(int idx)
+{
+    if (m_epub) {
+        QUrl newUrl = m_epub->getSpineUrl(idx);
+        setUrl(newUrl);
+    }
+}
+
+QUrl EPUBView::getPageUrl(int pageNum)
+{
+    assert(m_epub != NULL);
+    return m_epub->getSpineUrl(pageNum);
+}
+
+int EPUBView::getPageIdx(const QUrl &url) const
+{
+    assert(m_epub != NULL);
+    return m_epub->getSpineIdx(url);
+}
+
+int EPUBView::pagesNum() const
+{
+    if (m_epub) {
+        return m_epub->spineSize();
+    }
+    return 0;
 }
 
 void EPUBView::handleUrlChange(const QUrl &url)

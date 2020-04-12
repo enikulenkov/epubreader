@@ -3,7 +3,7 @@
         <file>qml/epubreader.qml</file>
         <file>qml/content/Button.qml</file>
         <file>qml/content/ScrollBar.qml</file>
-        <file>qml/content/FlickableEPUBView.qml</file>
+        <file>qml/content/EPUBListView.qml</file>
         <file>qml/epublibrary.qml</file>
         <file>qml/content/BookThumbnail.qml</file>
         <file>qml/content/BookItem.qml</file>

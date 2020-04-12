@@ -10,7 +10,7 @@ Rectangle {
 
     color: activePalette.base // TODO maybe window?
 
-    FlickableEPUBView {
+    EPUBListView {
         id: epubView
 
         fileName: mainWindow.fileName

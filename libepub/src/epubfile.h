@@ -62,6 +62,9 @@ public:
     QByteArray tocDocument() const;
     QUrl resolveTocUrl(const QUrl &url) const;
 
+    int spineSize() const;
+    QUrl getSpineUrl(int idx) const;
+    int getSpineIdx(const QUrl &url) const;
 private:
     void parseContentFile(const QString &fileName);
     bool parseManifest(const QXmlQuery &parentQuery, QXmlResultItems &items);

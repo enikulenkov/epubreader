@@ -326,3 +326,26 @@ bool EPUBFile::hasUrl(QUrl url) const
     }
     return false;
 }
+
+int EPUBFile::spineSize() const
+{
+    return m_spine.size();
+}
+
+QUrl EPUBFile::getSpineUrl(int idx) const
+{
+    return getUrlByID(m_spine.at(idx).idref);
+}
+
+int EPUBFile::getSpineIdx(const QUrl &url) const
+{
+    QString id = getIDByUrl(url);
+
+    for (int i = 0; i < m_spine.size(); i++) {
+        if (m_spine.at(i).idref == id) {
+            return i;
+        }
+    }
+
+    return 0;
+}
