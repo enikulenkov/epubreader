@@ -80,7 +80,6 @@ protected:
 
 private Q_SLOTS:
     void handleUrlChange(const QUrl &url);
-    void handleExternalLink(const QUrl &url);
 
 private:
     void resizeContent();

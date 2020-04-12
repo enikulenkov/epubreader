@@ -39,7 +39,6 @@ EPUBView::EPUBView() :
     frame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
 
     page()->setNetworkAccessManager(new EPUBAccessManager);
-    page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 #endif
 
     m_prevPageAction = new QAction(this);
@@ -52,12 +51,6 @@ EPUBView::EPUBView() :
     m_nextPageAction->setEnabled(false);
 
     connect(this, SIGNAL(urlChanged(QUrl)), SLOT(handleUrlChange(QUrl)));
-
-#if 0
-    connect(this, SIGNAL(linkClicked(QUrl)), SLOT(handleExternalLink(QUrl)));
-
-    //setResizesToContents(true);
-#endif
 
     setBackgroundIndex(0);
 }
@@ -266,9 +259,4 @@ void EPUBView::openTocDocumentRequest(const QString &path)
         return;
 
     setUrl(m_epub->resolveTocUrl(QUrl(path)));
-}
-
-void EPUBView::handleExternalLink(const QUrl &url)
-{
-    QDesktopServices::openUrl(url);
 }

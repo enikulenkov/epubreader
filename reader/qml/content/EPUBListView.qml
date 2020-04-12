@@ -174,6 +174,14 @@ ListView {
                                 );
                 }
             }
+
+            // Open external links in system browser, do not open in WebEngineView
+            onNavigationRequested: function(request) {
+                if (request.navigationType === WebEngineNavigationRequest.LinkClickedNavigation) {
+                    Qt.openUrlExternally(request.url);
+                    request.action = WebEngineNavigationRequest.IgnoreRequest;
+                }
+            }
         }
     }
 
