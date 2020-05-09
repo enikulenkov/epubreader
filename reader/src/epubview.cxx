@@ -31,13 +31,6 @@
 EPUBView::EPUBView() :
     m_epub(0), m_textSizeMultiplier(1), m_schemeHandler()
 {
-
-#if 0
-    QWebFrame *frame = page()->mainFrame();
-    frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-    frame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-#endif
-
     m_prevPageAction = new QAction(this);
     m_nextPageAction = new QAction(this);
 
