@@ -53,6 +53,7 @@ OTHER_FILES += \
     qml/content/Button.qml \
     qml/content/ScrollBar.qml \
     qml/content/EPUBListView.qml \
+    qml/content/EPUBListItem.qml \
     desktop/epubreader.desktop \
     icons/apubreader.png \
     icons/icon.svg \
@@ -89,3 +90,5 @@ unix {
     backup.path = /etc/osso-backup/applications
     backup.files += backup/epubreader.conf
 }
+
+DISTFILES += \
