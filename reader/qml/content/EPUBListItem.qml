@@ -2,13 +2,16 @@ import QtQuick 2.0
 import QtWebEngine 1.10
 
 
-Rectangle {
+Flickable {
     id: epubListItem
 
     property alias url: epubWebEngine.url
     property int backgroundIndex: 0
     property real textSizeMultiplier: 1.0
     property string defaultFont: ""
+
+    contentHeight: epubWebEngine.height
+    contentWidth: epubWebEngine.width
 
     function reload() {
         epubWebEngine.reload()
@@ -17,11 +20,15 @@ Rectangle {
     WebEngineView {
         id: epubWebEngine
 
+        property int actualHeight: -1
+        property int actualWidth: -1
+
         settings.javascriptEnabled: true
         settings.localContentCanAccessFileUrls: false
         backgroundColor: "grey"
 
-        anchors.fill: parent
+        height: Math.max(actualHeight, epubListItem.height)
+        width: Math.max(actualWidth, epubListItem.width)
 
         onContentsSizeChanged: {
             console.log(index, ": Contents Size epubWebEngine", contentsSize.height, "x", contentsSize.width)
@@ -111,6 +118,16 @@ Rectangle {
                             setBackgrounColorStr() +
                             setBodyMargins()
                             );
+                runJavaScript(
+                    "document.documentElement.scrollHeight;",
+                    function (i_actualPageHeight) {
+                        epubWebEngine.actualHeight = i_actualPageHeight;
+                    })
+                runJavaScript(
+                    "document.documentElement.scrollWidth;",
+                    function (i_actualPageWidth) {
+                        epubWebEngine.actualWidth = i_actualPageWidth;
+                    })
             }
         }
 
