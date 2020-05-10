@@ -178,6 +178,6 @@ void MainWindow::showEvent(QShowEvent *event)
     Q_UNUSED(event);
     if (m_showLibrary) {
         m_showLibrary = false;
-        //showLibrary();
+        showLibrary();
     }
 }
